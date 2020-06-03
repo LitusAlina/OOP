@@ -1,125 +1,141 @@
 #include <iostream>
-#include <stdio.h>
 #include <cmath>
-#include <iomanip>
 
 using namespace std;
 
-class Section 
+class Figures
 {
-private: 
-	int begX, endX, begY, endY;
-	int x, y;
+protected:
+	int* x = new int[4];
+	int* y = new int[4];
 
 public:
-	Section() 
+	Figures() {};
+	Figures(int* x1, int* y1)
 	{
-		begX = 0;
-		endX = 0;
-		x = 0;
-		begY = 0;
-		endY = 0;
-		y = 0;
+		for (int i = 0; i < 4; i++)
+		{
+			x[i] = x1[i];
+			y[i] = y1[i];
+		}
 	}
+	
+	int Perimeter() { return 0; };
+	int Square() { return 0; };
+};
 
-	Section(int valuebegX, int valueendX, int valuebegY, int valueendY)
-	{
-		begX = valuebegX;
-		endX = valueendX;
-		begY = valuebegY;
-		endY = valueendY;
-		x = endX - begX;
-		y = endY - begY;
-	}
-	int GetbegX() 
-	{
-		return begX;
-	}
-	int GetendX()
-	{
-		return endX;
-	}
-	int GetbegY()
-	{
-		return begY;
-	}
-	int GetendY()
-	{
-		return endY;
-	}
-	int Getx() 
-	{
-		return x;
-	}
-	int Gety()
-	{
-		return y;
-	}
+class Rectangles : public Figures
+{
+public:
 
-	Section(const Section & other) 
+	int length_side(int* x, int* y)
 	{
-		//конструктор копирования
-		this->x = other.x;
-		this->y = other.y;
-	}
 
-	Section & operator = (const Section & other) 
-	{
-		this->x = other.x;
-		this->y = other.y;
-		this->endX = other.endX;
-		this->begX = other.begX;
+		int x1 = abs(x[0] - x[1]);
+		int y1 = abs(y[0] - y[1]);
+		int a = sqrt(x1 * x1 + y1 * y1);
+
+		int x2 = abs(x[1] - x[2]);
+		int y2 = abs(y[1] - y[2]);
+		int b = sqrt(x2 * x2 + y2 * y2);
+		
+		return a,b;
+		
 	}
-	Section  operator - (const Section & other)
+	Rectangles(int* x1, int* y1)
+	{ 
+		for (int i = 0; i < 4; i++)
+		{
+			x[i] = x1[i];
+			y[i] = y1[i];
+		}
+	};
+
+	int Square()
 	{
-		Section temp1;
-		temp1.x = this->endX - other.begX;
-		temp1.y = this->endY - other.begY;
-		return temp1;
+		int s = this->length_side(x, y) * this->length_side(x, y);
+		cout << "square:\t" << s << endl;
+		return s;
 	}
-	Section  operator + (const Section & other)
+	int Perimeter()
 	{
-		Section temp2;
-		temp2.x = this->x + other.x;
-		temp2.y = this->y + other.y;
-		return temp2;
+		int p = (this->length_side(x, y) + this->length_side(x, y)) * 2;
+		cout << "perimeter:\t" << p << endl << endl;
+		return p;
 	}
-	Section  operator * (int a)
+	int** Get_Info()
 	{
-		Section temp3;
-		temp3.x = this->x * a;
-		temp3.y = this->y * a;
-		return temp3;
-	}
-	int Length() 
-	{
-		float result;
-		result = sqrt(x*x +y*y);
-		cout << result<< endl;
-		return result;
+		int** coords = new int* [2];
+		for (int i = 0; i < 2; i++) {
+			coords[i] = new int[2];
+		}
+		return coords;
 	}
 	void Print()
 	{
-		cout << "L\t" << x << "\t" << y;
+		cout << "Rectangle\n" ;
 		cout << endl;
 	}
-	
 };
-int main() 
-{
-	Section L2(3, 8, 4, 16);
-	Section L3(1, 4, 5, 9);
-	Section L1 = L2 + L3;
-	L1.Print();
-	L2.Print();
-	L3.Print();
-	L1.Length();
-	L2.Length();
-	L3.Length();
 
-	Section L4 = L3 * 2;
-	L4.Print();
-	L4.Length();
+class Circle : public Figures
+{
+private: int r;
+public:
+	float pi = 3.14;
+	Circle(int radius)
+	{ 
+		r = radius;
+	};
+
+	int Square()
+	{
+		float s = pi * this->r * this->r;
+		cout << "square:\t" << s << endl;
+		return s;
+	}
+	int Perimeter()
+	{
+		float p = 2 * pi * this->r;
+		cout << "perimeter:\t" << p << endl;
+		return p;
+	}
+	int** Get_Info()
+	{
+		int** coords = new int* [2];
+		for (int i = 0; i < 2; i++) {
+			coords[i] = new int[2];
+		}
+		return coords;
+	}
+	void Print()
+	{
+		cout << "Circle\n";
+		cout << endl;
+	}
+};
+
+int main()
+{
+	int* x = new int[4] { 0, 0, 2, 2 };
+	int* y = new int[4] { 0, 1, 1, 0 };
+	Figures f1(x, y);
+	Rectangles r1(x, y);
+	r1.length_side(x, y);
+	r1.Print();
+	int s = r1.Square();
+	int p = r1.Perimeter();
+	int* x1 = new int[4];
+	int* y1 = new int[4];
+	int** coords = new int* [2];
+	for (int i = 0; i < 2; i++) 
+	{
+		coords[i] = new int[2];
+	}
+	coords = r1.Get_Info();
+	Circle o(3);
+	o.Print();
+	o.Perimeter();
+	o.Square();
 	
-	return 0;
 }

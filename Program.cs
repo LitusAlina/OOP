@@ -1,118 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace lab4cs
+namespace lab5SH1
 {
-    class Section
+    
+    class Figures
     {
-        private int begX;
-        private int endX;
-        private int begY;
-        private int endY;
-        int x, y;
-        public Section()
-        {
-            begX = 0;
-            endX = 0;
-            x = 0;
-            begY = 0;
-            endY = 0;
-            y = 0;
-        }
-        public Section(int valuebegX, int valueendX, int valuebegY, int valueendY)
-        {
-            begX = valuebegX;
-            endX = valueendX;
-            begY = valuebegY;
-            endY = valueendY;
-            x = endX - begX;
-            y = endY - begY;
-        }
-        public int GetbegX()
-        {
-            return begX;
-        }
-        public int GetendX()
-        {
-            return endX;
-        }
-        public int GetbegY()
-        {
-            return begY;
-        }
-        public int GetendY()
-        {
-            return endY;
-        }
-        public int Getx()
-        {
-            return x;
-        }
-        public int Gety()
-        {
-            return y;
-        }
+        protected int[] x = new int[4];
+        protected int[] y = new int[4];
 
-        public Section(Section other)
+        public Figures(int[] x1, int[] y1)
         {
-            //конструктор копирования
-            this.x = other.x;
-            this.y = other.y;
+            for (int i = 0; i < 4; i++)
+            {
+                x[i] = x1[i];
+                y[i] = y1[i];
+            }
         }
-        public static Section operator -(Section obj, Section other)
+        Figures() { }
+        
+        virtual int Perimeter() { return 0; }
+        virtual int Square() { return 0; }
+        public int length_of_side(int index1, int index2)
         {
-            Section temp1 = new Section();
-            temp1.x = obj.endX - other.begX;
-            temp1.y = obj.endY - other.begY;
-            return temp1;
-        }
-        public static Section operator +(Section obj, Section other)
-        {
-            Section temp2 = new Section();
-            temp2.x = obj.x + other.x;
-            temp2.y = obj.y + other.y;
-            return temp2;
-        }
-        public static Section operator *(Section obj, int a)
-        {
-            Section temp3 = new Section();
-            temp3.x = obj.x * a;
-            temp3.y = obj.y * a;
-            return temp3;
-        }
-        public double Length()
-        {
-            double result;
-            result = Math.Sqrt(this.x * this.x + this.y * this.y);
-            Console.WriteLine(result);
-            return result;
-        }
-        public void Print()
-        {
-            Console.WriteLine("L\t" + x + "\t" + y);
-            Console.WriteLine("\n");
+            index1--;
+            index2--;
+            if (x[index1] == x[index2]) return Math.Abs(y[index1] - y[index2]);
+            else if (y[index1] == y[index2]) return Math.Abs(x[index1] - x[index2]);
+            else return 0;
         }
     }
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Section L2 = new Section(3, 8, 4, 16);
-            Section L3 = new Section(1, 4, 5, 9);
-            Section L1 = L2 + L3;
-            L1.Print();
-            L2.Print();
-            L3.Print();
-            L1.Length();
-            L2.Length();
-            L3.Length();
 
-            Section L4 = L3 * 2;
-            L4.Print();
-            L4.Length();
+    class Rectangles : Figures
+    {
+        public Rectangles(int[] x1, int[] y1) : base(x1, y1) { }
+
+        public int Square()
+        {
+            return this.length_of_side(1, 2) * this.length_of_side(2, 3);
+        }
+        public int Perimeter()
+        {
+            return (this.length_of_side(1, 2) + this.length_of_side(2, 3)) * 2;
+        }
+        public (int[] x, int[] y) Get_Info()
+        {
+            return (x, y);
         }
     }
+
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                int[] x = new[] { 0, 0, 2, 2 };
+                int[] y = new[] { 0, 1, 1, 0 };
+                Figures f1 = new Figures(x, y);
+                int l = f1.length_of_side(1, 2);
+                Rectangles r1 = new Rectangles(x, y);
+                int s = r1.Square();
+                int p = r1.Perimeter();
+                int[] x1 = new int[4];
+                int[] y1 = new int[4];
+                (x1, y1) = r1.Get_Info();
+            }
+        }
+    
 }
