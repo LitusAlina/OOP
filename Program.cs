@@ -1,123 +1,118 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace LAB3CS
+namespace lab4cs
 {
-    public class Class1
+    class Section
     {
-        public static int row, col;
-        public int rows, cols;
-        public int start;
-        public bool error;
-        private int[,] arr = new int[row, col];
-        private int mid;
+        private int begX;
+        private int endX;
+        private int begY;
+        private int endY;
+        int x, y;
+        public Section()
+        {
+            begX = 0;
+            endX = 0;
+            x = 0;
+            begY = 0;
+            endY = 0;
+            y = 0;
+        }
+        public Section(int valuebegX, int valueendX, int valuebegY, int valueendY)
+        {
+            begX = valuebegX;
+            endX = valueendX;
+            begY = valuebegY;
+            endY = valueendY;
+            x = endX - begX;
+            y = endY - begY;
+        }
+        public int GetbegX()
+        {
+            return begX;
+        }
+        public int GetendX()
+        {
+            return endX;
+        }
+        public int GetbegY()
+        {
+            return begY;
+        }
+        public int GetendY()
+        {
+            return endY;
+        }
+        public int Getx()
+        {
+            return x;
+        }
+        public int Gety()
+        {
+            return y;
+        }
 
-        public Class1(int s, int r, int c)
+        public Section(Section other)
         {
-            start = s;
-            row = r;
-            col = c;
-            arr = new int[r, c];
-            error = false;
-            rows = r;
-            cols = c;
+            //конструктор копирования
+            this.x = other.x;
+            this.y = other.y;
         }
-        public float this[int index]
+        public static Section operator -(Section obj, Section other)
         {
-            get
-            {
-                index = index - start;
-                if (index >= 0 && index < cols * rows)
-                {
-                    error = false;
-                    float mult = 1;
-                    for (int i = 0; i < rows; i++)
-                    {
-                        mult *= arr[i, index];
-                    }
-                    return mult;
-                }
-                else
-                {
-                    error = true;
-                    return 0;
-                }
-            }
+            Section temp1 = new Section();
+            temp1.x = obj.endX - other.begX;
+            temp1.y = obj.endY - other.begY;
+            return temp1;
         }
-        public int this[int index1, int index2]
+        public static Section operator +(Section obj, Section other)
         {
-            set
-            {
-                if (index1 >= 0 && index1 < rows && index2 >= 0 && index2 < cols)
-                {
-                    error = false;
-                    arr[index1, index2] = value;
-                }
-                else
-                {
-                    error = true;
-                }
-            }
-            get
-            {
-                if (index1 >= 0 && index1 < rows && index2 >= 0 && index2 < cols)
-                {
-                    error = false;
-                    return arr[index1, index2];
-                }
-                else
-                {
-                    error = true;
-                    return 0;
-                }
-            }
+            Section temp2 = new Section();
+            temp2.x = obj.x + other.x;
+            temp2.y = obj.y + other.y;
+            return temp2;
         }
-        public int Middle
+        public static Section operator *(Section obj, int a)
         {
-            get
-            {
-                mid = 0;
-                for (int i = 0; i < rows; i++)
-                {
-                    for (int j = 0; j < cols; j++)
-                    {
-                        mid += arr[i, j];
-                    }
-                }
-                return mid/(rows*cols);
-            }
+            Section temp3 = new Section();
+            temp3.x = obj.x * a;
+            temp3.y = obj.y * a;
+            return temp3;
+        }
+        public double Length()
+        {
+            double result;
+            result = Math.Sqrt(this.x * this.x + this.y * this.y);
+            Console.WriteLine(result);
+            return result;
         }
         public void Print()
         {
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    Console.Write("{0} ", arr[i, j]);
-                }
-                Console.WriteLine("\n");
-            }
+            Console.WriteLine("L\t" + x + "\t" + y);
+            Console.WriteLine("\n");
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            LAB3CS.Class1 array = new LAB3CS.Class1(1, 3, 3);
-            for (int i = 0; i <= array.rows; i++)
-            {
-                for (int j = 0; j <= array.cols; j++)
-                {
-                    array[i, j] = i * array.cols + j + 1;
-                }
-            }
-            array.Print();
-            Console.WriteLine(array[1]);
-            Console.WriteLine(array[2]);
-            Console.WriteLine(array[3]);
-            Console.WriteLine(array.Middle);
+            Section L2 = new Section(3, 8, 4, 16);
+            Section L3 = new Section(1, 4, 5, 9);
+            Section L1 = L2 + L3;
+            L1.Print();
+            L2.Print();
+            L3.Print();
+            L1.Length();
+            L2.Length();
+            L3.Length();
+
+            Section L4 = L3 * 2;
+            L4.Print();
+            L4.Length();
         }
     }
 }
-
