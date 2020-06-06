@@ -1,0 +1,4 @@
+﻿  Source.cpp
+C:\Users\Dell\Documents\labs\2sem\lab1\lab1\Source.cpp(11,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Dell\Documents\labs\2sem\lab1\lab1\Source.cpp(69): warning C4715: func2: значение возвращается не при всех путях выполнения
+  lab1.vcxproj -> C:\Users\Dell\Documents\labs\2sem\lab1\Debug\lab1.exe
