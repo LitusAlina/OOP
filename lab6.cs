@@ -1,0 +1,231 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using System.IO;
+
+namespace lab6SH
+{
+    class Expression
+    {
+        private float a, b, c, d;
+
+        public Expression()
+        {
+            a = 0;
+            b = 0;
+            c = 0;
+            d = 0;
+        }
+        public Expression(float a1, float b1, float c1, float d1)
+        {
+            a = a1;
+            b = b1;
+            c = c1;
+            d = d1;
+        }
+        public Expression(Expression other)
+        {
+            this.a = other.a;
+            this.b = other.b;
+            this.c = other.c;
+            this.d = other.d;
+        }
+
+        public double CalculateExpression()
+        {
+            if (4 * b - c <= 0) throw new ArithmeticException("Logarithm value is not exist");
+            if (b + c / d - 1 == 0) throw new DivideByZeroException("Division by 0");
+            if (d == 0) throw new DivideByZeroException("Division by 0");
+            return (Math.Log10(4 * b - c) * a / (b + c / d - 1));
+        }
+        public void SetValue(char ch, float value)
+        {
+            switch (ch)
+            {
+                case 'a': { a = value; break; }
+                case 'b': { b = value; break; }
+                case 'c': { c = value; break; }
+                case 'd': { d = value; break; }
+                default: break;
+            }
+        }
+        public float GetValue(char ch)
+        {
+            switch (ch)
+            {
+                case 'a': return a;
+                case 'b': return b;
+                case 'c': return c;
+                case 'd': return d;
+                default: return 0;
+            }
+        }
+    }
+
+
+    namespace lab4cs
+    {
+        class Section
+        {
+            private int begX;
+            private int endX;
+            private int begY;
+            private int endY;
+            int x, y;
+            public Section()
+            {
+                begX = 0;
+                endX = 0;
+                x = 0;
+                begY = 0;
+                endY = 0;
+                y = 0;
+            }
+            public Section(int valuebegX, int valueendX, int valuebegY, int valueendY)
+            {
+                begX = valuebegX;
+                endX = valueendX;
+                begY = valuebegY;
+                endY = valueendY;
+                x = endX - begX;
+                y = endY - begY;
+            }
+            public int GetbegX()
+            {
+                return begX;
+            }
+            public int GetendX()
+            {
+                return endX;
+            }
+            public int GetbegY()
+            {
+                return begY;
+            }
+            public int GetendY()
+            {
+                return endY;
+            }
+            public int Getx()
+            {
+                return x;
+            }
+            public int Gety()
+            {
+                return y;
+            }
+
+            public Section(Section other)
+            {
+                //конструктор копирования
+                this.x = other.x;
+                this.y = other.y;
+            }
+            public static Section operator -(Section obj, Section other)
+            {
+                Section temp1 = new Section();
+                temp1.x = obj.endX - other.begX;
+                temp1.y = obj.endY - other.begY;
+                return temp1;
+            }
+            public static Section operator +(Section obj, Section other)
+            {
+                Section temp2 = new Section();
+                temp2.x = obj.x + other.x;
+                temp2.y = obj.y + other.y;
+                return temp2;
+            }
+            public static Section operator *(Section obj, int a)
+            {
+                Section temp3 = new Section();
+                temp3.x = obj.x * a;
+                temp3.y = obj.y * a;
+                return temp3;
+            }
+            public double Length()
+            {
+                double result;
+                result = Math.Sqrt(this.x * this.x + this.y * this.y);
+                Console.WriteLine(result);
+                return result;
+            }
+            public void Print()
+            {
+                Console.WriteLine("L\t" + x + "\t" + y);
+                Console.WriteLine("\n");
+
+            }
+        }
+        class Program
+        {
+            static void Main(string[] args)
+            {
+
+                File.Delete("Log_file.txt");
+                DateTime thisDay = DateTime.Today;
+                Expression[] o = new Expression[3];
+                try
+                {
+                    o[0] = new Expression(0, 0, 4, 0);
+                    o[1] = new Expression(1, 0, 2, 0);
+                    o[2] = new Expression();
+                    o[2].SetValue('a', -1);
+                    o[2].SetValue('b', 1);
+                    o[2].SetValue('c', 10);
+                    o[2].SetValue('d', 0);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        try { Console.WriteLine(o[i].CalculateExpression()); }
+                        catch (DivideByZeroException exept)
+                        {
+                            using (TextWriter t = new StreamWriter("Log_file.txt", true, System.Text.Encoding.Default))
+                            {
+                                t.WriteLine(exept.Message);
+                                t.WriteLine(thisDay.ToString("d"));
+                            }
+                        }
+                        catch (ArithmeticException exept)
+                        {
+                            using (TextWriter t = new StreamWriter("Log_file.txt", true, System.Text.Encoding.Default))
+                            {
+                                t.WriteLine(exept.Message);
+                                t.WriteLine(thisDay.ToString("d"));
+                            }
+                        }
+                    }
+                }
+
+                catch (IndexOutOfRangeException)
+                {
+                    using (TextWriter t = new StreamWriter("Log_file.txt", true, System.Text.Encoding.Default))
+                    {
+                        t.WriteLine("Matching item not found");
+                        t.WriteLine(thisDay.ToString("d"));
+                    }
+                }
+                finally { Console.WriteLine("All items are processed. Program completed"); }
+
+
+
+
+                Section L2 = new Section(3, 8, 4, 16);
+                Section L3 = new Section(1, 4, 5, 9);
+                Section L1 = L2 + L3;
+                L1.Print();
+                L2.Print();
+                L3.Print();
+                L1.Length();
+                L2.Length();
+                L3.Length();
+
+                Section L4 = L3 * 2;
+                L4.Print();
+                L4.Length();
+            }
+        }
+    }
+}
+
