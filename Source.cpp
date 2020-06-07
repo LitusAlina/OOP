@@ -128,5 +128,4 @@ int func2(int y, int z) {
 		}
 	}
 
->>>>>>> 84ca7befa02c51efa5c0e16e68db505af7ecce47
 }
