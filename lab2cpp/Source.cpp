@@ -15,7 +15,7 @@ MyStringClass::MyStringClass() {
 	str = nullptr;
 	len = 0;
 }
-//äëÿ ïåðåäà÷è ñòðîêè ïðè ñîçäàíèè îáúåêòà êëàññà
+//Ã¤Ã«Ã¿ Ã¯Ã¥Ã°Ã¥Ã¤Ã Ã·Ã¨ Ã±Ã²Ã°Ã®ÃªÃ¨ Ã¯Ã°Ã¨ Ã±Ã®Ã§Ã¤Ã Ã­Ã¨Ã¨ Ã®Ã¡ÃºÃ¥ÃªÃ²Ã  ÃªÃ«Ã Ã±Ã±Ã 
 MyStringClass::MyStringClass(const char* string) {
 	len = strlength(string);
 	this->str = new char[len + 1];
@@ -23,7 +23,7 @@ MyStringClass::MyStringClass(const char* string) {
 		this->str[i] = string[i];
 	this->str[len] = '\0';
 }
-//äëÿ êîïèðîâàíèÿ â äðóãóþ îáëàñòü ïàìÿòè
+//Ã¤Ã«Ã¿ ÃªÃ®Ã¯Ã¨Ã°Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã¢ Ã¤Ã°Ã³Ã£Ã³Ã¾ Ã®Ã¡Ã«Ã Ã±Ã²Ã¼ Ã¯Ã Ã¬Ã¿Ã²Ã¨
 MyStringClass::MyStringClass(const MyStringClass& value) {
 	len = strlength(value.str);
 	this->str = new char[len + 1];
@@ -31,7 +31,7 @@ MyStringClass::MyStringClass(const MyStringClass& value) {
 		this->str[i] = value.str[i];
 	this->str[len] = '\0';
 }
-//äëÿ ïåðåìåùåíèÿ, ÷òîáû íå êîïèðîâàòü ïîýëåìåíòíî
+//Ã¤Ã«Ã¿ Ã¯Ã¥Ã°Ã¥Ã¬Ã¥Ã¹Ã¥Ã­Ã¨Ã¿, Ã·Ã²Ã®Ã¡Ã» Ã­Ã¥ ÃªÃ®Ã¯Ã¨Ã°Ã®Ã¢Ã Ã²Ã¼ Ã¯Ã®Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²Ã­Ã®
 MyStringClass::MyStringClass(MyStringClass&& value) {
 	this->len = value.len;
 	this->str = value.str;
@@ -93,19 +93,19 @@ MyContainerClass::MyContainerClass() {
 	this->clv_str++;
 	this->text = new MyStringClass[this->clv_str];
 }
-//äëÿ ïåðåäà÷è ñòðîêè ïðè ñîçäàíèè îáúåêòà êëàññà
+//Ã¤Ã«Ã¿ Ã¯Ã¥Ã°Ã¥Ã¤Ã Ã·Ã¨ Ã±Ã²Ã°Ã®ÃªÃ¨ Ã¯Ã°Ã¨ Ã±Ã®Ã§Ã¤Ã Ã­Ã¨Ã¨ Ã®Ã¡ÃºÃ¥ÃªÃ²Ã  ÃªÃ«Ã Ã±Ã±Ã 
 MyContainerClass::MyContainerClass(const MyStringClass* string) {
 	this->text = new MyStringClass[this->clv_str];
 	for (int i = 0; i < this->clv_str; i++)
 		this->text[i] = string[i];
 }
-//äëÿ êîïèðîâàíèÿ â äðóãóþ îáëàñòü ïàìÿòè
+//Ã¤Ã«Ã¿ ÃªÃ®Ã¯Ã¨Ã°Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã¢ Ã¤Ã°Ã³Ã£Ã³Ã¾ Ã®Ã¡Ã«Ã Ã±Ã²Ã¼ Ã¯Ã Ã¬Ã¿Ã²Ã¨
 MyContainerClass::MyContainerClass(const MyContainerClass& value) {
 	this->text = new MyStringClass[this->clv_str];
 	for (int i = 0; i < this->clv_str; i++)
 		this->text[i] = value.text[i];
 }
-//äëÿ ïåðåìåùåíèÿ, ÷òîáû íå êîïèðîâàòü ïîýëåìåíòíî
+//Ã¤Ã«Ã¿ Ã¯Ã¥Ã°Ã¥Ã¬Ã¥Ã¹Ã¥Ã­Ã¨Ã¿, Ã·Ã²Ã®Ã¡Ã» Ã­Ã¥ ÃªÃ®Ã¯Ã¨Ã°Ã®Ã¢Ã Ã²Ã¼ Ã¯Ã®Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²Ã­Ã®
 MyContainerClass::MyContainerClass(MyContainerClass&& value) {
 	this->text = value.text;
 	this->clv_str = value.clv_str;
@@ -263,3 +263,4 @@ int func2(int y, int z) {
 
 >>>>>>> ab1774ab237622c1e05a98e906a61e039ea04f90
 }
+	
