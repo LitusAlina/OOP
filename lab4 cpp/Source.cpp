@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <cmath>
 #include <iomanip>
-
 using namespace std;
 
 class Section 
@@ -58,7 +57,7 @@ public:
 
 	Section(const Section & other) 
 	{
-		//êîíñòðóêòîð êîïèðîâàíèÿ
+		//ÃªÃ®Ã­Ã±Ã²Ã°Ã³ÃªÃ²Ã®Ã° ÃªÃ®Ã¯Ã¨Ã°Ã®Ã¢Ã Ã­Ã¨Ã¿
 		this->x = other.x;
 		this->y = other.y;
 	}
